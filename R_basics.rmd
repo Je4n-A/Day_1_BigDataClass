@@ -1,0 +1,18 @@
+```{r}
+# Exercise 1
+    # 1. The primary four types of atomic vectors are integer, double, logical, character
+#2
+a <- TRUE
+b <- 3.56
+c <- "Logical"
+d <- 6
+
+typeof(a)
+typeof(b)
+typeof(c)
+typeof(d)
+```
+
+```{r}
+
+```

@@ -1,0 +1,82 @@
+```{r}
+PMT <- 750
+ if (PMT > 1000) {
+    PMT <- PMT + 10000 
+    } else if (PMT > 500) {
+       PMT <- PMT + 100
+    } else {
+        PMT <- 0
+    }
+print(PMT)
+```
+
+```{r}
+principal <- 10000
+rate <- 0.05
+num_periods <- 10
+
+cashflow <- vector("numeric", length = num_periods)
+
+for (i in 1:num_periods) {
+    value <- principal * (1 + rate)^i
+    if (i == 1) {
+        cashflow[i] <- 0
+        next
+    }
+    else if (value > 14000) {
+        cashflow[i] <- 0
+        break
+    }
+    cashflow[i] <- value
+}
+print(cashflow)
+```
+
+```{r}
+my_function <- function(x) {
+  if (!inherits(x, "numeric")) {
+    print("Not numeric")
+  } else {
+    print("Numeric Input")
+  }
+}
+
+my_function(c(1, 2, 3))
+
+```
+```{r}
+times_two <- function (x) {
+    return(x * 2)
+}
+    library(tidyverse)
+
+    map(1:10, times_two)
+```
+```{r}
+library(tidyverse)
+
+map(1:10, \(x) x * 2)
+```
+```{r}
+times_two <- function(x) {
+    return(x * 2)
+}
+
+result <- vector("list", length = 10)
+
+for (i in 1:10) {
+    result[[i]] <- times_two(i)
+}
+result
+```
+
+```{r}
+multiply_two <- function(x) {
+    return(x * 2)
+}
+
+library(tidyverse)
+
+templist <- map(1:10, multiply_two)
+print(templist)
+```
