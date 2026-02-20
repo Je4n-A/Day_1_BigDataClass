@@ -14,5 +14,30 @@ typeof(d)
 ```
 
 ```{r}
+# 1. Execute typeof(c(1,2,3)) and typeof(c(1L, 2L, 3L)). What’s the difference?
 
+typeof(c(1, 2, 3)) # This values are double
+typeof(c(1L, 2L, 3L)) # This values are Integer because of L next to the number
+#[1] "double"
+#[1] "integer"
+
+# 2. Assign a vector with three elements: 1,3,5, and name it as my_first_object
+my_first_object <- c(1,3,5)
+
+# 3. Assign another object with one element: 5, name it as MySecondObject
+MySecondObject <- c(5)
+
+# 4. Multiply my_first_object with MySecondObject. What do you get?
+answer <- my_first_object * MySecondObject
+# [1] 5
+# [2] 15
+# [3] 25
+
+# 5. Assign a vector with your name: my_name
+my_name <- c("Jean")
+
+# 6. What do you get when you execute my_name + 3? Why do you get this result?
+my_name + 3
+# Error: non-numeric argument to binary operator
+# Because my_name is a character vector ("Jean"), and the + operator only works on numeric types.
 ```

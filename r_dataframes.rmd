@@ -1,0 +1,122 @@
+library(dplyr)
+library(ggplot2)
+# Create a dataframe named as housing:
+
+# 6 columns: Name, Age, Sex, Income, Housing, Zipcode
+# Name: Amy, Bill, Charles, Donna, Eckert
+# Age: 21, 25, 30, 38, 49
+# Sex: Female, Male, Male, Female, Male
+# Income: 36000, 53000, 89000, 82000, 166000
+# Housing: “Rent”, “Rent”, “Own”, “Own”, “Rent”
+# Zipcode: 12333, 12543, 11255, 12333, 33533
+
+housing <- data.frame(
+  name    = c("Amy", "Bill", "Charles", "Donna", "Eckert"),
+  Age     = c(21, 25, 30, 38, 49),
+  Sex     = c("Female", "Male", "Male", "Female", "Male"),
+  Income  = c(36000, 53000, 89000, 82000, 166000),
+  Housing = c("Rent", "Rent", "Own", "Own", "Rent"),
+  Zipcode = c(12333, 12543, 11255, 12333, 33533)
+)
+
+# What are the type (class) of each column automatically recognized by R?
+str(housing)
+# Check with str(housing).
+
+# Q: What should be their type (class) in theory?
+# The zipcode should be a character are they are used as identifiers.
+# From diamonds dataframe (load tidyverse for access),
+# Subset the dataframe with below conditions:
+# carat is equal to 0.26 and;
+# clarity is “VS2” and;
+# select columns “carat”, “cut”, “clarity”
+# then store it as sub_diamonds
+sub_diamonds <- diamonds |>
+  filter(carat ==  0.26 & clarity == "VS2") |>
+  select("carat", "cut", "clarity")
+sub_diamonds
+# What is the dimension of sub_diamonds? Check with dim(sub_diamonds)
+dim(sub_diamonds) # 26 3
+
+# From diamonds dataframe:
+diamonds
+# How many observations (rows) have carat value greater than 3.1?
+filter_carat <- diamonds |> 
+  filter(carat >= 3.1) # 14 Rows
+
+filter_carat
+
+# What is the average of price of which carat equals to 1.0 ?
+avg_carat <- diamonds |>
+  filter(carat == 1.0) |>  # 5242
+  summarise(average_price = mean(price))
+
+avg_carat
+
+# What is the minimum, average, maximum of the price by cut?
+# Use min() and max()
+                        # 1 Fair            337     4359.     18574
+                        # 2 Good            327     3929.     18788
+                        # 3 Very Good       336     3982.     18818
+                        # 4 Premium         326     4584.     18823
+                        # 5 Ideal           326     3458.     18806
+diamonds |>  
+  group_by(cut) |>
+  summarise(
+    min_price = min(price),
+    avg_price = mean(price),
+    max_price = max(price)
+  )
+# How many observations are found by each cut?
+# Use n()
+# 1 Fair       1610
+# 2 Good       4906
+# 3 Very Good 12082
+# 4 Premium   13791
+# 5 Ideal     21551
+diamonds |>   
+  group_by(cut) |>
+  summarise(n = n())
+# Arrange the dataframe by carat (descending) and then price (ascending).
+diamonds_sorted <- diamonds |>
+  arrange(desc(carat), price)
+# Mutate a new column, named xyz, which is mulplication of x and y and z. Store the dataframe as my_diamond.
+my_diamond <- diamonds |>
+  mutate(xyz = x * y * z)
+# What is the maximum value of xyz (max(my_diamond$xyz))?
+max(my_diamond$xyz)
+# 3840.598
+
+# What is the correlation between carat and price by each cut?
+# Use cor(x,y) for correlation between x and y
+
+diamonds |>
+  group_by(cut) |>
+  summarise(corr_carat_price = cor(carat, price))
+
+# 1 Fair                 0.859
+# 2 Good                 0.922
+# 3 Very Good            0.926
+# 4 Premium              0.925
+# 5 Ideal                0.931
+
+# Install tidyquant package
+install.packages('tidyquant')
+
+# Download end-of-day stock price data using code below
+library(tidyquant)
+tickers = c("MSFT","TSLA", "AAPL", "BAC")
+stock_prices = tq_get(tickers, from = '2020-01-01', to = '2023-12-31')
+
+# How is the average daily trading volume calculated for each company(symbol)? You should get result like below:
+avg_vol_all <- stock_prices |>
+  group_by(symbol) |>
+  summarise(`mean(volume)` = mean(volume, na.rm = TRUE))
+avg_vol_all
+
+# What is the average trading volume of each company during the peak COVID-19 Season (March 2020)? You should get:
+avg_vol_all <- stock_prices |>
+  filter(year(date) == 2020, month(date) == 3) |>
+  group_by(symbol) |>
+  summarise(`mean(volume)` = mean(volume, na.rm = TRUE))
+avg_vol_all

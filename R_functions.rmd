@@ -1,0 +1,64 @@
+```{r}
+
+# 1. Define a perpetuity calculator function, pv_per(). What is the pv when PMT = $50,000, r = 4%, g = 0%?
+
+pv_per <- function(pmt, r, g) {
+    n <- pmt
+    d <- r - g
+
+    return(n / d)
+
+}
+answer <- pv_per(50000, 0.04, 0)
+```
+```{r}
+
+# 2. What is the pv when PMT = $50,000, r = 4%, but g are 1%, 2%, 3%?
+pv_per <- function(pmt, r, g) {
+    n <- pmt
+    d <- r - g
+
+    return(n / d)
+
+}
+answer <- pv_per(50000, 0.04, c(0.01, 0.02, 0.03))
+```
+
+```{r}
+# Convert below perpetuity function (pv_per) to anonymous function:
+
+function(pmt, r, g) {
+    return(pmt / (r - g))
+}
+
+```
+
+```{r}
+
+# Solve 23−−√
+#  using pipe operator.
+
+# First, solve above procedual way
+ 
+# For square root, use sqrt() function
+ 
+# Next, solve using the pipe operator.
+ 
+# Define function named cube that does x^3
+# Code should start with 2.
+
+x <- 2
+ans_proc <- x^3
+ans_proc
+
+sqrt(2^3)
+
+cube <- function(x) {
+    x ^ 3
+}
+
+cube(2)
+
+ans_pipe <- 2 |> cube()
+ans_pipe
+```
