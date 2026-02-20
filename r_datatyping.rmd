@@ -1,0 +1,67 @@
+
+# Load package tidyverse.
+
+# table1 will be ready for access.
+
+# What is the average population of each country? (Hint: group_by() and summarize())
+library(tidyverse)
+table1
+
+avg_pop <- table1 |>
+  group_by(country) |>
+  summarise(avg_population = mean(population))
+
+avg_pop
+
+# What the total sum of TB cases of all years by each country?
+total_sum <- table1 |>
+  group_by(country) |>
+  summarise(sum_cases = sum(cases))
+total_sum
+# What is the average percentage ratio of TB cases over population by each country?
+percent_ratio <- table1 |>
+  mutate(tb_over_pop_pct = (cases / population) * 100) |>
+  group_by(country) |>
+  summarise(avg_tb_over_pop_pct = mean(tb_over_pop_pct))
+percent_ratio
+
+# Load billboard data with
+# data(billboard)
+# print(billboard)
+
+# Select artist, track the columns that are “wk1” to “wk12”
+data(billboard)
+print(billboard)
+
+bb_12 <- billboard |>
+  select(artist, track, num_range("wk", 1:12))
+bb_12
+
+# Pivot the data to longer form.
+bb_long <- billboard |> 
+  select(artist, track, num_range("wk", 1:12)) |>
+  pivot_longer(wk1:wk12, names_to = "week", values_to = "rank")
+bb_long
+
+# Examine data structure of table1 and table2 available on tidyverse.
+# How can you transform table1 to table2?
+table1 |> 
+  pivot_longer(
+    cols = c(cases, population), # multiple selection: use c()
+    names_to = 'type',
+    values_to = 'count'
+  )
+
+# Examine data population available from tidyverse.
+
+# Pivot the data to generate output as below.
+population
+# (Hint: Browse document file ?pivot_wider() and see names_prefix argument.)
+pivot_pop <- population |>
+  pivot_wider(
+    names_from = year,
+    values_from = population,
+    names_prefix = "year_"
+  )
+print(pivot_pop)
+
